@@ -11,7 +11,9 @@ final class StatisticService: StatisticServiceProtocol {
     private enum Keys: String {
         case correct, total, bestGame, gamesCount
     }
+    
     private let userDefaults = UserDefaults.standard
+    
     var correct: Int {
         get {
             userDefaults.integer(forKey: Keys.correct.rawValue)
@@ -20,6 +22,7 @@ final class StatisticService: StatisticServiceProtocol {
             userDefaults.set(newValue, forKey: Keys.correct.rawValue)
         }
     }
+    
     var total: Int {
         get {
             userDefaults.integer(forKey: Keys.total.rawValue)
@@ -28,6 +31,7 @@ final class StatisticService: StatisticServiceProtocol {
             userDefaults.set(newValue, forKey: Keys.total.rawValue)
         }
     }
+    
     var gamesCount: Int {
         get {
             userDefaults.integer(forKey: Keys.gamesCount.rawValue)
@@ -36,6 +40,7 @@ final class StatisticService: StatisticServiceProtocol {
             userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue)
         }
     }
+    
     var bestGame: GameRecord? {
         get {
             guard
@@ -52,9 +57,11 @@ final class StatisticService: StatisticServiceProtocol {
             userDefaults.set(data, forKey: Keys.bestGame.rawValue)
         }
     }
+    
     var totalAccuracy: Double {
         Double(correct)/Double(total)*100
     }
+    
     func store(correct count: Int, total amount : Int) {
         self.correct += count
         self.total += amount

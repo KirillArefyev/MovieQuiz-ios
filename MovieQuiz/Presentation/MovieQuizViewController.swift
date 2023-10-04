@@ -7,15 +7,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var indexOfQuestionLabel: UILabel!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
+    
     @IBAction private func noButtonTapped(_ sender: UIButton) {
         let userAnswer = false
         showAnswerResult(isCorrect: userAnswer)
     }
+    
     @IBAction private func yesButtonTapped(_ sender: UIButton) {
         let userAnswer = true
         showAnswerResult(isCorrect: userAnswer)
     }
-    // MARK: - Variables, Constants
+    // MARK: - Private Properties
     private var currentQuizQuestionIndex = 0
     private var userCorrectAnswers = 0
     private let questionsAmount = 10
@@ -40,7 +42,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self?.showStep(viewModel)
         }
     }
-    // MARK: - Helper methods
+    // MARK: - Private Methods
     /// метод конвертации модели вопроса квиза во вью модель состояния "Вопрос показан"
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let stepView = QuizStepViewModel(
@@ -49,12 +51,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             questionNumber: "\(currentQuizQuestionIndex + 1)/\(questionsAmount)")
         return stepView
     }
+    
     /// метод для состояния "Вопрос показан"
     private func showStep(_ step: QuizStepViewModel) {
         moviePosterImageView.image = step.image
         textOfQuestionLabel.text = step.question
         indexOfQuestionLabel.text = step.questionNumber
     }
+    
     /// метод для изменения цвета рамки
     private func showAnswerResult(isCorrect: Bool) {
         moviePosterImageView.layer.masksToBounds = true
@@ -78,6 +82,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.yesButton.isEnabled = true
         }
     }
+    
     /// метод перехода в один из сценариев конечного автомата
     private func showNextQuestionOrResults() {
         if currentQuizQuestionIndex == questionsAmount - 1 {
