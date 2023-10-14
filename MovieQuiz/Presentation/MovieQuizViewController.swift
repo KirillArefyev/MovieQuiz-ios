@@ -1,23 +1,13 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
-    // MARK: - Outlets & Actions
+    // MARK: - Outlets
     @IBOutlet private weak var moviePosterImageView: UIImageView!
     @IBOutlet private weak var textOfQuestionLabel: UILabel!
     @IBOutlet private weak var indexOfQuestionLabel: UILabel!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    
-    @IBAction private func noButtonTapped(_ sender: UIButton) {
-        let userAnswer = false
-        showAnswerResult(isCorrect: userAnswer)
-    }
-    
-    @IBAction private func yesButtonTapped(_ sender: UIButton) {
-        let userAnswer = true
-        showAnswerResult(isCorrect: userAnswer)
-    }
     // MARK: - Private Properties
     private var currentQuizQuestionIndex = 0
     private var userCorrectAnswers = 0
@@ -151,5 +141,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self.questionFactory?.requestNextQuestion()
             })
         alertPresenter?.showResult(errorAlertView)
+    }
+    // MARK: - Actions
+    @IBAction private func noButtonTapped(_ sender: UIButton) {
+        let userAnswer = false
+        showAnswerResult(isCorrect: userAnswer)
+    }
+    
+    @IBAction private func yesButtonTapped(_ sender: UIButton) {
+        let userAnswer = true
+        showAnswerResult(isCorrect: userAnswer)
     }
 }

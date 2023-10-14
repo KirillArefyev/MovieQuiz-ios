@@ -7,7 +7,7 @@
 
 import Foundation
 
-class QuestionFactory: QuestionFactoryProtocol {
+final class QuestionFactory: QuestionFactoryProtocol {
 //    private var questions: [QuizQuestion] = [
 //        QuizQuestion(
 //            image: "The Godfather",
