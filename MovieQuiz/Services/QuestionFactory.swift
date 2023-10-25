@@ -8,48 +8,6 @@
 import Foundation
 
 final class QuestionFactory: QuestionFactoryProtocol {
-//    private var questions: [QuizQuestion] = [
-//        QuizQuestion(
-//            image: "The Godfather",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "The Dark Knight",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "Kill Bill",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "The Avengers",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "Deadpool",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "The Green Knight",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: true),
-//        QuizQuestion(
-//            image: "Old",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: false),
-//        QuizQuestion(
-//            image: "The Ice Age Adventures of Buck Wild",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: false),
-//        QuizQuestion(
-//            image: "Tesla",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: false),
-//        QuizQuestion(
-//            image: "Vivarium",
-//            text: "Рейтинг этого фильма больше чем 6?",
-//            correctAnswer: false)
-//    ]
     private var movies: [MostPopularMovie] = []
     private let moviesLoader: MoviesLoadingProtocol
     private weak var delegate: QuestionFactoryDelegate?
@@ -69,10 +27,17 @@ final class QuestionFactory: QuestionFactoryProtocol {
             } catch {
                 print("Ошибка загрузки изображения")
             }
-            let rating = Float(movie.rating ?? "0") ?? 0 // такая конструкция обусловлена тем, что у некоторых фильмов в возвращаемом JSON рейтинг null
-            let randomRating = Int.random(in: 6...9) // выбор случайного числа рейтинга для вопроса
-            let text = "Рейтинг этого фильма больше, чем \(randomRating)?"
-            let correctAnswer = rating > Float(randomRating)
+            let rating = Float(movie.rating ?? "0") ?? 0
+            let randomRating = Int.random(in: 6...9)
+            let moreOrLess = ["больше", "меньше"]
+            let moreOrLessRandom = moreOrLess.randomElement() ?? "больше"
+            let text = "Рейтинг этого фильма \(moreOrLessRandom), чем \(randomRating)?"
+            let correctAnswer: Bool
+            if moreOrLessRandom == "больше" {
+                correctAnswer = rating > Float(randomRating)
+            } else {
+                correctAnswer = rating < Float(randomRating)
+            }
             let questionStep = QuizQuestion(
                 image: imageData,
                 text: text,
