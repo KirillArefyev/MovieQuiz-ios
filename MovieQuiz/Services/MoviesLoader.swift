@@ -8,10 +8,14 @@
 import Foundation
 
 struct MoviesLoader: MoviesLoadingProtocol {
-    private let networkClient = NetworkClient()
+    private let networkClient: NetworkRouting
+    init(networkClient: NetworkRouting = NetworkClient()) {
+        self.networkClient = networkClient
+    }
+    
     private let apiParts = ["Top250Movies", "MostPopularMovies"]
     private var moviesUrl: URL {
-        guard let url = URL(string: "https://imdb-api.com/en/API/\(apiParts.randomElement()!)/k_zcuw1ytf") else { // считаю, что конкретно в этом месте имеет право быть форс анрап - массив "ручек" имеет приватный модификатор доступа и захардкоден
+        guard let url = URL(string: "https://imdb-api.com/en/API/\(apiParts.randomElement() ?? "Top250Movies")/k_zcuw1ytf") else {
             preconditionFailure("Невозможно создать moviesUrl")
         }
         return url
